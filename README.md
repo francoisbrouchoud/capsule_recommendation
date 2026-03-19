@@ -1,6 +1,6 @@
 # Capsule Recommendation
 
-Application Flutter mobile de recommandation de capsules type chatbot, avec parcours multi-phases (objectif, émotion, énergie) et logique de recommandation contextuelle.
+Application Flutter simple orientée mobile pour proposer quelques cafés.
 
 ## Lancer le projet
 
