@@ -1,5 +1,5 @@
 name: capsule_recommendation
-description: Une application Flutter simple orientée téléphone pour proposer du café.
+description: Une application Flutter mobile de recommandation de capsules avec chatbot.
 publish_to: 'none'
 
 version: 1.0.0+1

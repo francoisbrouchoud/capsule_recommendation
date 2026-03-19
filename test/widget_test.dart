@@ -3,11 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:capsule_recommendation/main.dart';
 
 void main() {
-  testWidgets('affiche des suggestions de café', (WidgetTester tester) async {
-    await tester.pumpWidget(const CafeApp());
+  testWidgets('affiche le chatbot de recommandation de capsules',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const CapsuleRecommendationApp());
 
-    expect(find.text('Ton café du jour'), findsOneWidget);
-    expect(find.text('Espresso'), findsOneWidget);
-    expect(find.text('Cappuccino'), findsOneWidget);
+    expect(find.text('Nespresso Capsule Assistant'), findsOneWidget);
+    expect(
+      find.textContaining('Bonjour, je vais vous aider à trouver la capsule'),
+      findsOneWidget,
+    );
+    expect(find.text('Commencer'), findsOneWidget);
   });
 }
