@@ -1,15 +1,15 @@
 # Capsule Recommendation
 
-Application Flutter mobile de recommandation de capsules type chatbot, avec parcours multi-phases (objectif, émotion, énergie) et logique de recommandation contextuelle.
+A mobile Flutter chatbot app for capsule recommendations, with a multi-step flow (goal, emotion, energy) and contextual recommendation logic.
 
-## Lancer le projet
+## Run the project
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-## Tester
+## Test
 
 ```bash
 flutter test

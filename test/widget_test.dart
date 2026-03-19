@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:capsule_recommendation/main.dart';
 
 void main() {
-  testWidgets('affiche le chatbot avec heure en barre de navigation',
+  testWidgets('shows chatbot with time in app bar',
       (WidgetTester tester) async {
     await tester.pumpWidget(const CapsuleRecommendationApp());
 
@@ -15,9 +15,9 @@ void main() {
 
     expect(hourFinder, findsOneWidget);
     expect(
-      find.textContaining('Bonjour, je vais vous aider à trouver la capsule'),
+      find.textContaining('Hello, I will help you find the capsule'),
       findsOneWidget,
     );
-    expect(find.text('Commencer'), findsOneWidget);
+    expect(find.text('Start'), findsOneWidget);
   });
 }

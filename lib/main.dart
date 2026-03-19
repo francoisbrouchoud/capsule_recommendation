@@ -14,7 +14,7 @@ class CapsuleRecommendationApp extends StatelessWidget {
     const cream = Color(0xFFF6F1E8);
 
     return MaterialApp(
-      title: 'Capsule Assistant',
+      title: 'Capsule Advisor',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -68,7 +68,7 @@ class CapsuleRecommendation {
     required this.why,
     required this.effect,
     required this.caffeine,
-    this.intensity = 'Moyenne',
+    this.intensity = 'Medium',
   });
 
   final String name;
@@ -135,8 +135,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       ..add(
         const ChatMessage(
           text:
-              'Bonjour, je vais vous aider à trouver la capsule la plus adaptée à votre moment.',
-          options: ['Commencer', 'Voir comment ça fonctionne'],
+              'Hello, I will help you find the capsule that best fits your current moment.',
+          options: ['Start', 'See how it works'],
         ),
       );
   }
@@ -151,33 +151,33 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _messages.add(
             const ChatMessage(
               text:
-                  'Souhaitez-vous une recommandation basée sur vos données et votre contexte du moment ?',
+                  'Would you like a recommendation based on your data and current context?',
               options: [
-                'Oui, recommandation personnalisée',
-                'Non, recommandation rapide',
+                'Yes, personalized recommendation',
+                'No, quick recommendation',
               ],
             ),
           );
           break;
 
         case 1:
-          _path = choice.contains('personnalisée')
+          _path = choice.contains('personalized')
               ? UserPath.personalized
               : UserPath.quick;
           _messages.add(
             ChatMessage(
-              text: choice.contains('personnalisée')
-                  ? 'Parfait. Le système peut utiliser habitudes de consommation, machine connectée, données bien-être disponibles et vos réponses.'
-                  : 'Très bien. Je passe en recommandation rapide avec des questions courtes.',
+              text: choice.contains('personalized')
+                  ? 'Great. The system can use consumption habits, connected machine data, available wellness data, and your answers.'
+                  : 'Great. I will run a quick recommendation with short questions only.',
             ),
           );
           _step = 2;
           _messages.add(
             ChatMessage(
               text: _isEvening
-                  ? 'Moment du soir détecté automatiquement. Je privilégierai les capsules peu caféinées.'
-                  : 'Moment de la journée détecté automatiquement selon l’heure du téléphone.',
-              options: const ['Continuer'],
+                  ? 'Evening moment detected automatically. I will prioritize low-caffeine capsules.'
+                  : 'Time of day detected automatically from the device clock.',
+              options: const ['Continue'],
             ),
           );
           break;
@@ -186,13 +186,13 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _step = 3;
           _messages.add(
             const ChatMessage(
-              text: 'Quel est votre besoin principal en ce moment ?',
+              text: 'What is your main need right now?',
               options: [
-                'Me concentrer pour travailler / étudier',
-                'Me préparer pour le sport',
-                'Gérer le stress avant un moment important',
-                'Me détendre',
-                'J’ai juste envie d’un café',
+                'Focus for work / study',
+                'Prepare for sport',
+                'Manage stress before an important moment',
+                'Relax',
+                'I just want a coffee',
               ],
             ),
           );
@@ -203,13 +203,13 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _step = 4;
           _messages.add(
             const ChatMessage(
-              text: 'Comment vous sentez-vous actuellement ?',
+              text: 'How do you feel right now?',
               options: [
-                'Stressé / anxieux',
-                'Fatigué / démotivé',
-                'Neutre',
-                'Positif / motivé',
-                'Calme / relax',
+                'Stressed / anxious',
+                'Tired / unmotivated',
+                'Neutral',
+                'Positive / motivated',
+                'Calm / relaxed',
               ],
             ),
           );
@@ -221,29 +221,29 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _messages.add(
             const ChatMessage(
               text:
-                  'Souhaitez-vous que j’analyse automatiquement votre niveau d’énergie (si données disponibles) ?',
-              options: ['Oui, analyse auto', 'Non, je réponds manuellement'],
+                  'Do you agree to let us automatically use your health bracelet/watch data to analyze your energy level?',
+              options: ['Yes, auto analysis', 'No, I will answer manually'],
             ),
           );
           break;
 
         case 5:
-          if (choice.contains('analyse auto')) {
+          if (choice.contains('auto analysis')) {
             _energy = _inferEnergyFromContext();
             _step = 7;
             _messages.add(
               ChatMessage(
                 text:
-                    'Niveau estimé : ${_energyLabel(_energy!)}. Je prépare la recommandation.',
-                options: const ['Voir ma recommandation'],
+                    'Estimated level: ${_energyLabel(_energy!)}. I am preparing your recommendation.',
+                options: const ['See my recommendation'],
               ),
             );
           } else {
             _step = 6;
             _messages.add(
               const ChatMessage(
-                text: 'Comment évaluez-vous votre niveau d’énergie ?',
-                options: ['Faible', 'Moyen', 'Élevé'],
+                text: 'How would you rate your energy level?',
+                options: ['Low', 'Medium', 'High'],
               ),
             );
           }
@@ -254,8 +254,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _step = 7;
           _messages.add(
             const ChatMessage(
-              text: 'Merci. Je prépare votre recommandation.',
-              options: ['Voir ma recommandation'],
+              text: 'Thanks. I am preparing your recommendation.',
+              options: ['See my recommendation'],
             ),
           );
           break;
@@ -266,12 +266,12 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _messages.add(_recommendationMessage(rec));
           _messages.add(
             const ChatMessage(
-              text: 'Souhaitez-vous voir d’autres options ?',
+              text: 'Would you like to see other options?',
               options: [
-                'Oui, une option plus intense',
-                'Oui, une option plus douce',
-                'Oui, une option avec moins de caféine',
-                'Non, je garde cette recommandation',
+                'Yes, a more intense option',
+                'Yes, a smoother option',
+                'Yes, an option with less caffeine',
+                'No, I will keep this recommendation',
               ],
             ),
           );
@@ -285,26 +285,26 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           _step = 9;
           _messages.add(
             const ChatMessage(
-              text: 'Que souhaitez-vous faire maintenant ?',
+              text: 'What would you like to do now?',
               options: [
-                'Ajouter la capsule au panier',
-                'Enregistrer pour plus tard',
-                'Voir les détails du café',
-                'Refaire une recommandation',
+                'Add capsule to cart',
+                'Save for later',
+                'View coffee details',
+                'Redo a recommendation',
               ],
             ),
           );
           break;
 
         case 9:
-          if (choice == 'Refaire une recommandation') {
+          if (choice == 'Redo a recommendation') {
             _resetConversation();
             return;
           }
           _messages.add(
             const ChatMessage(
-              text: 'Puis-je encore vous aider ?',
-              options: ['Refaire une recommandation'],
+              text: 'Can I help you with anything else?',
+              options: ['Redo a recommendation'],
             ),
           );
           break;
@@ -313,24 +313,24 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   }
 
   UserGoal _parseGoal(String choice) {
-    if (choice.contains('concentrer')) return UserGoal.focus;
+    if (choice.contains('Focus')) return UserGoal.focus;
     if (choice.contains('sport')) return UserGoal.sport;
     if (choice.contains('stress')) return UserGoal.stressManagement;
-    if (choice.contains('détendre')) return UserGoal.relax;
+    if (choice.contains('Relax')) return UserGoal.relax;
     return UserGoal.justCoffee;
   }
 
   EmotionState _parseEmotion(String choice) {
-    if (choice.contains('Stressé')) return EmotionState.stressed;
-    if (choice.contains('Fatigué')) return EmotionState.tired;
-    if (choice.contains('Positif')) return EmotionState.positive;
-    if (choice.contains('Calme')) return EmotionState.calm;
+    if (choice.contains('Stressed')) return EmotionState.stressed;
+    if (choice.contains('Tired')) return EmotionState.tired;
+    if (choice.contains('Positive')) return EmotionState.positive;
+    if (choice.contains('Calm')) return EmotionState.calm;
     return EmotionState.neutral;
   }
 
   EnergyLevel _parseEnergy(String choice) {
-    if (choice == 'Faible') return EnergyLevel.low;
-    if (choice == 'Élevé') return EnergyLevel.high;
+    if (choice == 'Low') return EnergyLevel.low;
+    if (choice == 'High') return EnergyLevel.high;
     return EnergyLevel.medium;
   }
 
@@ -344,19 +344,19 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   AlternativeChoice _parseAlternative(String choice) {
     if (choice.contains('intense')) return AlternativeChoice.intense;
-    if (choice.contains('douce')) return AlternativeChoice.soft;
-    if (choice.contains('moins')) return AlternativeChoice.lessCaffeine;
+    if (choice.contains('smoother')) return AlternativeChoice.soft;
+    if (choice.contains('less')) return AlternativeChoice.lessCaffeine;
     return AlternativeChoice.keepMain;
   }
 
   String _energyLabel(EnergyLevel energy) {
     switch (energy) {
       case EnergyLevel.low:
-        return 'Faible';
+        return 'Low';
       case EnergyLevel.medium:
-        return 'Moyen';
+        return 'Medium';
       case EnergyLevel.high:
-        return 'Élevé';
+        return 'High';
     }
   }
 
@@ -368,9 +368,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     if (_isEvening) {
       return const CapsuleRecommendation(
         name: 'Altissio Decaffeinato',
-        why: 'Consommation en soirée : priorité à une capsule peu caféinée.',
-        effect: 'Moment plus doux pour la fin de journée.',
-        caffeine: 'Décaféiné',
+        why: 'Evening consumption: prioritize a low-caffeine capsule.',
+        effect: 'A smoother moment for the end of the day.',
+        caffeine: 'Decaffeinated',
         intensity: '5',
       );
     }
@@ -378,9 +378,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     if (goal == UserGoal.stressManagement && emotion == EmotionState.stressed) {
       return const CapsuleRecommendation(
         name: 'Melozio Go',
-        why: 'Besoin de soutien sans surstimulation.',
-        effect: 'Concentration stable.',
-        caffeine: 'Modérée',
+        why: 'Need support without overstimulation.',
+        effect: 'Stable concentration.',
+        caffeine: 'Moderate',
         intensity: '6',
       );
     }
@@ -389,17 +389,17 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       if (energy == EnergyLevel.low || energy == EnergyLevel.medium) {
         return const CapsuleRecommendation(
           name: 'Ristretto Intenso',
-          why: 'Objectif sport avec énergie basse/moyenne.',
-          effect: 'Boost net avant effort.',
-          caffeine: 'Élevée',
+          why: 'Sport goal with low/medium energy.',
+          effect: 'Strong boost before effort.',
+          caffeine: 'High',
           intensity: '9',
         );
       }
       return const CapsuleRecommendation(
         name: 'Arpeggio',
-        why: 'Maintenir l’énergie avec intensité maîtrisée.',
-        effect: 'Énergie stable.',
-        caffeine: 'Modérée à élevée',
+        why: 'Maintain energy with controlled intensity.',
+        effect: 'Stable energy.',
+        caffeine: 'Moderate to high',
         intensity: '8',
       );
     }
@@ -407,9 +407,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     if (goal == UserGoal.relax) {
       return const CapsuleRecommendation(
         name: 'Ethiopia',
-        why: 'Profil plus délicat pour un moment détente.',
-        effect: 'Pause aromatique.',
-        caffeine: 'Modérée',
+        why: 'A softer profile for a relaxing moment.',
+        effect: 'Aromatic break.',
+        caffeine: 'Moderate',
         intensity: '4',
       );
     }
@@ -418,26 +418,26 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       if (energy == EnergyLevel.low) {
         return const CapsuleRecommendation(
           name: 'Melozio Go',
-          why: 'Énergie faible avec besoin de clarté.',
-          effect: 'Soutien mental progressif.',
-          caffeine: 'Modérée',
+          why: 'Low energy with a need for clarity.',
+          effect: 'Progressive mental support.',
+          caffeine: 'Moderate',
           intensity: '6',
         );
       }
       return const CapsuleRecommendation(
         name: 'Arpeggio',
-        why: 'Profil de caractère pour rester concentré.',
-        effect: 'Focus et constance.',
-        caffeine: 'Modérée à élevée',
+        why: 'A bold profile to stay focused.',
+        effect: 'Focus and consistency.',
+        caffeine: 'Moderate to high',
         intensity: '8',
       );
     }
 
     return const CapsuleRecommendation(
       name: 'Melozio Go',
-      why: 'Recommandation équilibrée selon votre contexte.',
-      effect: 'Équilibre général.',
-      caffeine: 'Modérée',
+      why: 'Balanced recommendation based on your context.',
+      effect: 'Overall balance.',
+      caffeine: 'Moderate',
       intensity: '6',
     );
   }
@@ -449,25 +449,25 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       case AlternativeChoice.intense:
         return const CapsuleRecommendation(
           name: 'Ristretto Intenso',
-          why: 'Option plus intense demandée.',
-          effect: 'Boost plus marqué.',
-          caffeine: 'Élevée',
+          why: 'You asked for a more intense option.',
+          effect: 'Stronger boost.',
+          caffeine: 'High',
           intensity: '9',
         );
       case AlternativeChoice.soft:
         return const CapsuleRecommendation(
           name: 'Ethiopia',
-          why: 'Option plus douce demandée.',
-          effect: 'Pause plus légère.',
-          caffeine: 'Modérée',
+          why: 'You asked for a smoother option.',
+          effect: 'Lighter break.',
+          caffeine: 'Moderate',
           intensity: '4',
         );
       case AlternativeChoice.lessCaffeine:
         return const CapsuleRecommendation(
           name: 'Half Caffeinato',
-          why: 'Option avec moins de caféine demandée.',
-          effect: 'Stimulation légère.',
-          caffeine: 'Faible à modérée',
+          why: 'You asked for a lower-caffeine option.',
+          effect: 'Light stimulation.',
+          caffeine: 'Low to moderate',
           intensity: '5',
         );
       case AlternativeChoice.keepMain:
@@ -477,12 +477,12 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   ChatMessage _recommendationMessage(CapsuleRecommendation rec) {
     return ChatMessage(
-      text: 'Voici la capsule la plus adaptée à votre situation :\n\n'
-          'Capsule recommandée : ${rec.name}\n'
-          'Pourquoi : ${rec.why}\n'
-          'Effet recherché : ${rec.effect}\n'
-          'Niveau de caféine : ${rec.caffeine}\n'
-          'Intensité : ${rec.intensity}',
+      text: 'Here is the capsule that best matches your situation:\n\n'
+          'Recommended capsule: ${rec.name}\n'
+          'Why: ${rec.why}\n'
+          'Expected effect: ${rec.effect}\n'
+          'Caffeine level: ${rec.caffeine}\n'
+          'Intensity: ${rec.intensity}',
     );
   }
 
